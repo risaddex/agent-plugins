@@ -1,0 +1,23 @@
+{
+  "name": "spec-anchored",
+  "displayName": "Spec-Anchored",
+  "version": "0.1.0",
+  "description": "Spec-anchored agentic development: one permanent spec per capability, machine gates before human review, and autonomy only with evidence. Harness-neutral operational layer.",
+  "author": {
+    "name": "Local adaptation of Raphael Moura's spec-anchored method"
+  },
+  "homepage": "https://raphamoura.dev/en/blog/spec-anchored-agentic-development/",
+  "repository": "https://github.com/risaddex/cursor-plugins",
+  "license": "MIT",
+  "keywords": [
+    "spec-anchored",
+    "verification",
+    "capabilities"
+  ],
+  "category": "developer-tools",
+  "tags": [
+    "specs",
+    "verification",
+    "agentic-development"
+  ]
+}

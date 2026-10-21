@@ -1,0 +1,25 @@
+---
+description: Truth-layer files are read-only outside named spec-anchored flows. Apply when editing specs, golden reference tables, or the metrics ratchet baseline.
+alwaysApply: false
+globs: specs/**/*.md
+---
+
+# Truth layer
+
+`specs/**` (including `tables/`), the golden tests that read those tables, and `.metrics-baseline.json` are the truth layer. Casual sessions read them and leave them unchanged.
+
+Named flows are the only writers:
+
+- Spec content: the `to-spec` skill, or a supervised semantic amendment the human approved in session, with affected IDs, old meaning, proposed meaning, rationale, and the verification delta. Orchestrated and unattended modes stay proposal-only and stop with `SPEC_CHANGE_REQUIRED`.
+- Acceptance criteria: explicit human approval. Typed IDs (`BR-<CAP>-###`, `AC-<CAP>-###`, `OQ-<CAP>-###`, `CTR-<CAP>-###`) are never renumbered or reused. Retire an ID. Tickets point at IDs.
+- Reference values: the human confirms the row. A value changes because a cited source changed.
+- The ratchet baseline: only its own shrink-and-lock step.
+
+A task that seems to need a truth edit outside these flows stops and names the flow. A silently edited reference table makes every downstream check green and false.
+
+Two floor behaviors:
+
+- Work happens on a typed branch (`feature/`, `fix/`, `chore/`), off the default branch.
+- Done is the runner's real output. A claim without that output stays a claim.
+
+Record the loaded rule paths in `.agent-runs/<run-id>/`. Run state never goes under `.cursor/`, `.claude/`, or `.codex/`.
