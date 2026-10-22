@@ -14,7 +14,7 @@ Inherit the Owner's effective model. Ask for maximum effort. If that cannot be h
 
 Require the input candidate SHA, the base SHA, the issue, the ratified spec pointers, the approved plan and scope, the repository verification commands, and known baseline failures. If the candidate identity or the scope is missing, return `CODE_HARDENING_BLOCKED`.
 
-Read the `general-code-review` skill before editing. Also read `rules/truth-layer.mdc` and `rules/testing.mdc`.
+Read the `general-code-review` skill before editing. Also read `lib/rules/truth-layer.md` and `lib/rules/testing.md`.
 
 Work in a disposable worktree. If this host cannot give you one, return `ENVIRONMENT` and do not edit the Owner's tree.
 

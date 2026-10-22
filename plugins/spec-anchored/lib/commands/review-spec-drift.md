@@ -1,5 +1,6 @@
 ---
 name: review-spec-drift
+argument-hint: capability or spec path
 description: Report drift between a capability spec and its code. Does not edit either.
 ---
 

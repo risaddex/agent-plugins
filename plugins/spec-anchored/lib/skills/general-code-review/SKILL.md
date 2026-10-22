@@ -13,7 +13,7 @@ Spec conformance, security, performance, compliance, and systemic architecture s
 
 Require the exact input SHA, the complete diff, the task outcome, the approved plan and scope, the loaded rules, the verification commands, and known baseline failures. Refuse a moving or unidentified candidate with `CODE_HARDENING_BLOCKED`.
 
-Load `rules/truth-layer.mdc` and `rules/testing.mdc` before editing.
+Load `lib/rules/truth-layer.md` and `lib/rules/testing.md` before editing.
 
 ## Correctness
 
@@ -27,7 +27,7 @@ Remove needless complexity inside the task: duplicated mechanisms the repository
 
 ## Tests
 
-Follow `rules/testing.mdc`. Tests prove observable behavior and relevant boundaries, use the lowest faithful boundary, stay deterministic, and would fail if the intended behavior regressed. They do not weaken a golden oracle and they do not merely mirror the implementation. Language mutation belongs to `mutation-hardener`.
+Follow `lib/rules/testing.md`. Tests prove observable behavior and relevant boundaries, use the lowest faithful boundary, stay deterministic, and would fail if the intended behavior regressed. They do not weaken a golden oracle and they do not merely mirror the implementation. Language mutation belongs to `mutation-hardener`.
 
 ## Types
 

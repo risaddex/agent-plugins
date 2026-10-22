@@ -1,5 +1,6 @@
 ---
 name: spec-to-tickets
+argument-hint: path to a ratified spec
 description: Draft delivery issues from a ratified capability spec. Publishes only after the human confirms.
 ---
 

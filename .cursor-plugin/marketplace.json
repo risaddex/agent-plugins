@@ -1,5 +1,5 @@
 {
-  "name": "risaddex",
+  "name": "agent-plugins",
   "owner": {
     "name": "risaddex"
   },
@@ -8,9 +8,17 @@
       "name": "spec-anchored",
       "source": "./plugins/spec-anchored",
       "description": "Spec-anchored agentic development: one permanent spec per capability, machine gates before human review, and autonomy only with evidence. Harness-neutral operational layer.",
-      "keywords": ["spec-anchored", "verification", "capabilities"],
+      "keywords": [
+        "spec-anchored",
+        "verification",
+        "capabilities"
+      ],
       "category": "developer-tools",
-      "tags": ["specs", "verification", "agentic-development"]
+      "tags": [
+        "specs",
+        "verification",
+        "agentic-development"
+      ]
     }
   ]
 }

@@ -1,5 +1,6 @@
 ---
 name: implement
+argument-hint: issue or spec slice
 description: Supervised spec-anchored implementation of one issue or spec slice. Human gates stay in session.
 ---
 

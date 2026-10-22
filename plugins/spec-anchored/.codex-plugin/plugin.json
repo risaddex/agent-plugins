@@ -1,0 +1,38 @@
+{
+  "name": "spec-anchored",
+  "version": "0.2.0",
+  "description": "Spec-anchored agentic development: one permanent spec per capability, machine gates before human review, and autonomy only with evidence. Harness-neutral operational layer.",
+  "author": {
+    "name": "Local adaptation of Raphael Moura's spec-anchored method"
+  },
+  "homepage": "https://raphamoura.dev/en/blog/spec-anchored-agentic-development/",
+  "repository": "https://github.com/risaddex/agent-plugins",
+  "license": "MIT",
+  "keywords": [
+    "spec-anchored",
+    "verification",
+    "capabilities"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Spec-Anchored",
+    "shortDescription": "One permanent spec per capability, with machine gates before human review.",
+    "longDescription": "Spec-anchored agentic development for Codex. Shared skills, agents, and templates live in lib/. This manifest is the Codex format. The plugin collects no data.",
+    "developerName": "risaddex",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Shape the next capability before writing a spec.",
+      "Implement one ratified spec slice and stop when the pull request is ready for a human."
+    ],
+    "websiteURL": "https://github.com/risaddex/agent-plugins",
+    "privacyPolicyURL": "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement",
+    "termsOfServiceURL": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+    "brandColor": "#1F4B3A",
+    "screenshots": []
+  }
+}

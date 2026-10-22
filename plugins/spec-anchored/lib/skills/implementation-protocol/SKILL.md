@@ -38,7 +38,7 @@ Read the adapter's gate table. Confirm the spec is ratified on the protected def
 - a pointed requirement, contract, or non-goal changed → `SPEC_STALE`;
 - relevance cannot be established → blocker for the configured authority.
 
-Confirm repository, branch or worktree, base SHA, issue ownership, available commands, and pre-existing failures. Read the root `AGENTS.md` when it exists. Load `rules/truth-layer.mdc` for any versioned change, `rules/testing.mdc` for behavioral changes, and `rules/package-by-feature.mdc` when production files or capability boundaries move. Record the loaded rule paths.
+Confirm repository, branch or worktree, base SHA, issue ownership, available commands, and pre-existing failures. Read the root `AGENTS.md` when it exists. Load `lib/rules/truth-layer.md` for any versioned change, `lib/rules/testing.md` for behavioral changes, and `lib/rules/package-by-feature.md` when production files or capability boundaries move. Record the loaded rule paths.
 
 Create `.agent-runs/<run-id>/`. Run state, logs, approvals, and handoffs live there. They never live under `.cursor/`, `.claude/`, or `.codex/`. Leave unowned user changes untouched.
 
@@ -98,7 +98,7 @@ If `scripts/spec-anchored` is installed, use its approval fingerprint. Otherwise
 
 Work the approved plan on a typed branch, in reviewable chunks. On every chunk, run lint, type check, and the tests for the touched area. Red does not advance.
 
-Use the repository's declared commands. Tests derive from requirement IDs and `rules/testing.mdc`. The truth layer stays read-only unless the adapter's semantic-amendment gate already approved the edit.
+Use the repository's declared commands. Tests derive from requirement IDs and `lib/rules/testing.md`. The truth layer stays read-only unless the adapter's semantic-amendment gate already approved the edit.
 
 A new path, dependency, schema or data operation, privilege, external action, or load-bearing decision returns to the adapter's gate.
 

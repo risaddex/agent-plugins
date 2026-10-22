@@ -1,5 +1,6 @@
 ---
 name: prep
+argument-hint: capability name
 description: Prepare the repository verification interface. Detect and extend. Does not change application code.
 ---
 

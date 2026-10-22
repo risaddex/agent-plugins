@@ -1,5 +1,6 @@
 ---
 name: to-spec
+argument-hint: capability name
 description: Write or update the capability spec from the interview. Gaps become open questions. Does not interview again.
 ---
 

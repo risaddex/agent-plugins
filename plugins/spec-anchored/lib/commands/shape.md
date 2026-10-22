@@ -1,5 +1,6 @@
 ---
 name: shape
+argument-hint: idea, transcript, brownfield area, spec, or issue
 description: Interview toward a capability spec or a sharpened task. Does not write the spec file.
 ---
 

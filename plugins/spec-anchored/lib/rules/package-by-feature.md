@@ -1,0 +1,13 @@
+# Package by feature
+
+Place every new production file inside the capability it belongs to. Leave top-level technical-layer folders (`controllers/`, `services/`, `repositories/`, `utils/`) uncreated and ungrown.
+
+Before creating a new top-level folder, all three tests pass:
+
+- The name denotes a recognizable business responsibility or outcome. Grammar class is irrelevant (`payments/`, `orders/`, and `onboarding/` can qualify). A shared data noun such as `customer/` or `invoice/` fails this test.
+- The folder is a vertical slice: rules, use cases, and persistence of that capability, together.
+- Imports point inward. Other capabilities complete their flows without reaching into it.
+
+A file with no clear home stops the run. Ask the human. Creating a capability is a boundary decision. The same word changing meaning is the usual signal that a boundary was crossed.
+
+A new capability directory in production code pairs with `specs/<capability>/<capability>.md`. Missing spec is a stop, named for the human, before the folder is treated as done.

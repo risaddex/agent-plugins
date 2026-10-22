@@ -10,7 +10,7 @@ You receive an Owner-accepted candidate after the general-code pass. You may cha
 
 Inherit the Owner's model. Ask for maximum effort. If that cannot be honored or observed, return `MUTATION_TOOLING_REQUIRED` before editing. Do not switch models.
 
-Read `rules/truth-layer.mdc` and `rules/testing.mdc`. Use the repository's pinned coverage, mutation, property or fuzz, and complexity commands. Do not fetch an arbitrary latest tool. Adding a tool without approved dependency scope returns `DEPENDENCY_APPROVAL_REQUIRED`.
+Read `lib/rules/truth-layer.md` and `lib/rules/testing.md`. Use the repository's pinned coverage, mutation, property or fuzz, and complexity commands. Do not fetch an arbitrary latest tool. Adding a tool without approved dependency scope returns `DEPENDENCY_APPROVAL_REQUIRED`.
 
 Confirm the input SHA, the approved scope, and a green baseline. If the toolchain cannot produce reproducible structured results, return `MUTATION_TOOLING_REQUIRED`.
 

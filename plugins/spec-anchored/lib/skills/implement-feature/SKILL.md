@@ -37,6 +37,6 @@ Owner implementation
 
 For `NO_CHANGE_CANDIDATE`, dispatch `general-code-reviewer` in no-change mode. Do not call `mutation-hardener` when there is no eligible code target.
 
-Both internal agents inherit this session's model at maximum effort. If that cannot be honored or observed, block. Verification commands come from the repository interface (`check`, `check-<capability>`, `golden`, and the mutation or fuzz commands when present) and from `rules/testing.mdc`.
+Both internal agents inherit this session's model at maximum effort. If that cannot be honored or observed, block. Verification commands come from the repository interface (`check`, `check-<capability>`, `golden`, and the mutation or fuzz commands when present) and from `lib/rules/testing.md`.
 
 After delivery, offer `explain` when the human wants the walkthrough.

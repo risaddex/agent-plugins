@@ -1,0 +1,13 @@
+# Testing and verification
+
+Load this rule on any production-code, test, contract, parser, validator, or behavioral change in a spec-anchored run. Record that it was loaded.
+
+1. Every material behavior, contract, invariant, or quality change maps to evidence that can detect a relevant regression.
+2. Use the lowest boundary that proves the property: unit or property test for pure logic; integration for database, queue, filesystem, or process semantics; contract test for an API, event, schema, or public interface; end-to-end only for a critical journey that nothing lower can prove.
+3. Every reproducible bug fix gets permanent regression coverage at the boundary where the defect occurs.
+4. Do not mock or replace the boundary whose real behavior must be proved.
+5. Tests anchor on the spec's acceptance criteria and reference values. A test that mirrors the implementation defends the current behavior, bugs included.
+6. Code selected by the approved mutation policy reaches 100% line coverage and 100% branch coverage on the eligible target, 100% mutant resolution, and zero actionable surviving mutants. An equivalent or tooling-limited mutant is an Owner disposition. The hardener does not approve its own exclusion.
+7. Parsers, decoders, validators, untrusted-input boundaries, serialization, and state-machine transitions get property or fuzz testing when that class applies. A fuzz failure keeps a reproducible seed or minimized input and becomes a permanent regression.
+8. Tests, reference oracles, mutation exclusions, fuzz corpora, and thresholds stay intact. Weakening them to turn a gate green is a finding.
+9. Record the exact commands, exit status, relevant output, artifacts, unexecuted checks, and remaining limitations. Report only commands that ran.

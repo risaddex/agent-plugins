@@ -1,0 +1,20 @@
+{
+  "name": "agent-plugins",
+  "description": "Marketplace pessoal de plugins para Cursor, Claude Code e Codex.",
+  "owner": {
+    "name": "risaddex"
+  },
+  "plugins": [
+    {
+      "name": "spec-anchored",
+      "description": "Spec-anchored agentic development: one permanent spec per capability, machine gates before human review, and autonomy only with evidence. Harness-neutral operational layer.",
+      "version": "0.2.0",
+      "source": "./plugins/spec-anchored",
+      "author": {
+        "name": "Local adaptation of Raphael Moura's spec-anchored method"
+      },
+      "category": "development",
+      "homepage": "https://raphamoura.dev/en/blog/spec-anchored-agentic-development/"
+    }
+  ]
+}

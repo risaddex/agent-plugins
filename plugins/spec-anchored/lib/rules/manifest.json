@@ -1,0 +1,19 @@
+{
+  "package-by-feature": {
+    "description": "Place new production files in the capability they belong to. Apply when creating or moving production files or changing capability boundaries in a spec-anchored repository.",
+    "alwaysApply": false
+  },
+  "principles": {
+    "description": "Five principles and three context layers for spec-anchored work. Apply when the user invokes a spec-anchored command or the repository keeps capability specs under specs/.",
+    "alwaysApply": false
+  },
+  "testing": {
+    "description": "Testing floor for spec-anchored changes. Apply when implementing, hardening, or reviewing production code, tests, contracts, parsers, or validators in a spec-anchored repository.",
+    "alwaysApply": false
+  },
+  "truth-layer": {
+    "description": "Truth-layer files are read-only outside named spec-anchored flows. Apply when editing specs, golden reference tables, or the metrics ratchet baseline.",
+    "alwaysApply": false,
+    "globs": "specs/**/*.md"
+  }
+}
