@@ -1,0 +1,17 @@
+{
+  "name": "a2a-harness",
+  "version": "0.1.0",
+  "description": "Conversas duráveis entre agentes descobertos por Agent Cards, via CLI A2A do agent-runtime, sem dependência de provedor.",
+  "author": {
+    "name": "risaddex"
+  },
+  "keywords": [
+    "a2a",
+    "agents",
+    "harness",
+    "coordination"
+  ],
+  "displayName": "A2A Harness",
+  "skills": "./skills/",
+  "mcpServers": "./mcp.cursor.json"
+}

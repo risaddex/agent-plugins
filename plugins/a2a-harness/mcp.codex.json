@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "a2a-harness": {
+      "command": "node",
+      "args": [
+        "./scripts/serve.mjs"
+      ],
+      "cwd": ".",
+      "env_vars": [
+        "PATH",
+        "AGENT_RUNTIME_ROOT",
+        "A2A_COORDINATOR_CONFIG"
+      ],
+      "tool_timeout_sec": 120
+    }
+  }
+}

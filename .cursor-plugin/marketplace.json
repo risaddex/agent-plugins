@@ -19,6 +19,11 @@
         "verification",
         "agentic-development"
       ]
+    },
+    {
+      "name": "a2a-harness",
+      "source": "./plugins/a2a-harness",
+      "description": "Conversas duráveis entre agentes descobertos por Agent Cards, via CLI A2A do agent-runtime, sem dependência de provedor."
     }
   ]
 }

@@ -15,6 +15,15 @@
       },
       "category": "development",
       "homepage": "https://raphamoura.dev/en/blog/spec-anchored-agentic-development/"
+    },
+    {
+      "name": "a2a-harness",
+      "source": "./plugins/a2a-harness",
+      "description": "Conversas duráveis entre agentes descobertos por Agent Cards, via CLI A2A do agent-runtime, sem dependência de provedor.",
+      "version": "0.1.0",
+      "author": {
+        "name": "risaddex"
+      }
     }
   ]
 }

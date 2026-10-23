@@ -1,0 +1,20 @@
+{
+  "dataDir": "/absolute/private/a2a/conversations",
+  "participants": [
+    "writer",
+    "reviewer"
+  ],
+  "agents": {
+    "writer": {
+      "cardUrl": "https://writer.example.test/.well-known/agent-card.json",
+      "contextId": "retained-writer-context",
+      "principal": "operator",
+      "tokenFile": "/absolute/private/a2a/writer.token"
+    },
+    "reviewer": {
+      "cardUrl": "https://reviewer.example.test/.well-known/agent-card.json",
+      "contextId": "retained-reviewer-context",
+      "principal": "operator"
+    }
+  }
+}
