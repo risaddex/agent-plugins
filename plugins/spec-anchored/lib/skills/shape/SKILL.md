@@ -21,6 +21,16 @@ Map the interview as a design tree and work it in rounds. The frontier is every 
 
 Each question includes a recommended answer. The human confirms or corrects. The recommendation is a proposal. The human's answer is the truth.
 
+Ask through the host's structured question tool whenever one exists (in Claude Code, `AskUserQuestion`); a numbered text list is the fallback, not the default.
+
+- One tool question per frontier item. Header carries the frontier number and a short topic (`Q3 Entrada`).
+- 2 to 4 mutually exclusive options. The recommended answer is the first option, labeled with `(Recommended)`. The human can always answer "Other".
+- Put reference tables, worked examples, and mockups in the option `preview`, so the human compares them side by side.
+- Use `multiSelect` only when the choices are not exclusive.
+- The tool takes at most 4 questions per call. Split a larger frontier across consecutive calls in the same round, in order, before reacting to answers.
+- Each question must stand alone: the dialog may hide earlier conversation text, so restate the fact from code or glossary it depends on.
+- Keep in plain text only what the tool cannot carry: open collection the human must author, such as new reference rows.
+
 If the codebase can answer a question, explore it and do not block the rest of the frontier on that exploration. Code settles facts. Behavior found in code enters as a question until the human confirms it. Code can contain bugs that became structure.
 
 For a calculation or threshold, collect input → expected-output pairs with the human first, then draft the rule as the generalization of those examples.

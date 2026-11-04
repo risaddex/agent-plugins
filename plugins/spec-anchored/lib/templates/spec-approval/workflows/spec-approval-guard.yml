@@ -1,0 +1,38 @@
+# Guard de invalidação da aprovação de capability spec (specs/<capability>/<capability>.md).
+#
+# A aprovação é registrada pelo /approve (spec-approve.yml) num commit que só preenche
+# approved_by/approved_at. Se a spec muda depois disso, a aprovação não cobre mais o
+# conteúdo e este check fica VERMELHO até alguém revisar e comentar /approve de novo.
+# Regra completa no docstring de .github/scripts/spec_aprovacao.py.
+#
+# Sem filtro de paths de propósito: com filtro, um push que não mexe em specs/ deixaria o
+# head novo SEM este check, e o vermelho do head anterior sumiria da tela do PR.
+name: spec-approval-guard
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: spec-approval-guard-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  aprovacao-valida:
+    name: Aprovação de spec válida
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # Head do PR (não o merge commit de refs/pull/N/merge): a regra compara commits do
+      # próprio branch. Histórico completo para achar o merge-base com a base.
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Verifica se nenhuma spec mudou depois de aprovada
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+        run: python3 .github/scripts/spec_aprovacao.py verificar --base "origin/$BASE_REF"

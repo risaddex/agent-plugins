@@ -52,6 +52,27 @@ Document a sabotage check: change one reference value and expect `golden` to fai
 
 Create or extend the existing workflow. Keep lint, typecheck, tests with coverage, build, `golden`, and the secrets scan as separately visible checks. Wire differential mutation only for affected capabilities when the mutation command exists.
 
+## Phase 4b — Spec approval (optional)
+
+Only for a GitHub repository with Actions. Ask the human whether to install `/approve` spec approval. Use the host's structured question tool when it exists (in Claude Code, `AskUserQuestion`), with "Install" as the recommended option and the limitations below in the description. Install only on an explicit yes. On a no, record "spec approval: declined" in the report and move on.
+
+What it is: a reviewer comments `/approve` on the spec's pull request; a workflow fills `approved_by` (login) and `approved_at` (comment time, UTC) in the front matter of every changed `specs/*/*.md` that has a `capability_id`, commits as the Actions bot, and replies with the reviewed head SHA. `status` stays `draft`; ratification is still the merge. A sibling check fails the pull request when a spec changes after its approval.
+
+Install:
+
+- Copy this plugin's `templates/spec-approval/workflows/*.yml` to `.github/workflows/` and `templates/spec-approval/scripts/spec_aprovacao.py` to `.github/scripts/`. Never overwrite an existing file; report the conflict and stop that step.
+- Keep the workflow's `actions/checkout` and `actions/setup-*` major versions aligned with the repository's existing workflows.
+- Verify: `python3 -m py_compile .github/scripts/spec_aprovacao.py`, and `actionlint` when available (the `rhysd/actionlint` image works without an install).
+- Declare it in the root `AGENTS.md` under `## Commands`: "Spec approval: comment `/approve` on the spec's pull request."
+
+Tell the human these limits before they answer, and repeat them in the report:
+
+- `issue_comment` workflows run only from the default branch's copy, so `/approve` works after the install is merged.
+- The approver's "Viewed" file state is not readable with `GITHUB_TOKEN` (`viewerViewedState` is the token owner's). The substitute: the commenter needs write permission, and the approval is refused when the head moved after the comment.
+- The guard check blocks merges only when branch protection marks it required; private repositories on the free plan cannot.
+- The approval commit is pushed with `GITHUB_TOKEN`, so it does not start CI on its own.
+- No self-approval rule, and it guards against mistakes, not against someone with write access forging the bot's commit.
+
 ## Phase 5 — Ratchet baseline
 
 If a metrics baseline file is absent, measure current lint and security-analysis counts and write `.metrics-baseline.json` as the ratchet floor: new issues fail, the existing count is the ceiling until a shrink-and-lock step lowers it. Do not edit an existing baseline in this skill.
@@ -64,4 +85,4 @@ Copy this plugin's `templates/constitution.md` to `architecture/constitution.md`
 
 ## Report
 
-List what was detected, what was added, what was left alone, commands actually run and their results, and every named blocker.
+List what was detected, what was added, what was left alone, commands actually run and their results, whether spec approval was installed or declined, and every named blocker.
