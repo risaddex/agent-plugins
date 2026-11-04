@@ -1,7 +1,7 @@
 # Guard de invalidação da aprovação de capability spec (specs/<capability>/<capability>.md).
 #
 # A aprovação é registrada pelo /approve (spec-approve.yml) num commit que só preenche
-# approved_by/approved_at. Se a spec muda depois disso, a aprovação não cobre mais o
+# approved_by/approved_at e promove status a ratified. Se a spec muda depois disso, a aprovação não cobre mais o
 # conteúdo e este check fica VERMELHO até alguém revisar e comentar /approve de novo.
 # Regra completa no docstring de .github/scripts/spec_aprovacao.py.
 #
@@ -32,7 +32,20 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
 
+      # O script de verificação vem do branch base, nunca do PR (mesma regra do /approve):
+      # 1. um PR não pode editar o próprio guard para passar;
+      # 2. as duas metades usam a mesma regra. Um PR criado antes de uma mudança da regra
+      #    rodava o script velho do próprio branch e recusava a aprovação recém-gravada
+      #    pelo /approve com o script novo (cbdigital#311).
+      - name: Checkout do script (branch base)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          path: ferramenta
+          sparse-checkout: .github/scripts
+          persist-credentials: false
+
       - name: Verifica se nenhuma spec mudou depois de aprovada
         env:
           BASE_REF: ${{ github.event.pull_request.base.ref }}
-        run: python3 .github/scripts/spec_aprovacao.py verificar --base "origin/$BASE_REF"
+        run: python3 ferramenta/.github/scripts/spec_aprovacao.py verificar --base "origin/$BASE_REF"
