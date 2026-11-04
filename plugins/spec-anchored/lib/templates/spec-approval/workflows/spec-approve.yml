@@ -181,8 +181,11 @@ jobs:
           # Sanidade: a aprovação recém-gravada tem de passar no guard de invalidação.
           python3 "$script" verificar --base "origin/$BASE_REF"
 
-          # Sem --force: se o branch andou durante este job, o push é rejeitado e nada é gravado.
-          if ! git push origin "HEAD:refs/heads/$HEAD_REF"; then
+          # Compare-and-swap: o push só acontece se o branch remoto ainda está EXATAMENTE em
+          # HEAD_SHA. Um push simples aceitaria o fast-forward também se o branch tivesse sido
+          # resetado para um ancestral durante o job, ressuscitando commits removidos.
+          # O lease explícito não reescreve histórico: o commit de aprovação é filho de HEAD_SHA.
+          if ! git push --force-with-lease="refs/heads/$HEAD_REF:$HEAD_SHA" origin "HEAD:refs/heads/$HEAD_REF"; then
             recusar "Nada foi aprovado: o branch \`$HEAD_REF\` mudou enquanto a aprovação era gravada. Revise o head novo e comente \`/approve\` de novo."
           fi
           commit=$(git rev-parse HEAD)
