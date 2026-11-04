@@ -17,7 +17,7 @@ This skill does not interview. If a template section lacks material, list it und
 4. Update mode, when the spec exists: add the delta. New items receive the next unused ID. Never renumber or rewrite an existing criterion unless the interview explicitly changed that criterion. Retire an ID that no longer applies. Do not delete it.
 5. A reference table larger than a screen goes to `specs/<capability>/tables/` as data the golden tests read. The rule cites the file.
 
-Set `status: draft`. Promotion to `ratified` happens when a human merges this spec's own pull request to the protected branch. Downstream ticket and implement skills refuse a draft.
+Set `status: draft`. Promotion to `ratified` happens on this spec's own pull request and takes effect when a human merges it to the protected branch. When the repository has the `/approve` spec approval (installed by `prep`), the reviewer's `/approve` writes `status: ratified` with the approval; otherwise the human sets it in that pull request. Downstream ticket and implement skills refuse a draft.
 
 ## Completeness
 

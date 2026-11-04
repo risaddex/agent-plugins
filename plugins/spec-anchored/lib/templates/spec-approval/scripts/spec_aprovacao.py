@@ -7,17 +7,23 @@ Só stdlib: roda no python3 do runner sem setup.
 
 Subcomandos:
   alteradas --base REF                 lista as specs alteradas no PR (merge-base de REF..HEAD)
-  aprovar --login L --em TS ARQ...     preenche approved_by/approved_at no front matter
+  aprovar --login L --em TS ARQ...     preenche approved_by/approved_at e promove status a ratified
   verificar --base REF                 falha se alguma spec alterada mudou depois da aprovação
 
+Ratificação: o /approve grava status: ratified junto com a aprovação, no branch do PR.
+Ela só passa a valer quando o PR é mergeado no branch default (é lá que spec-to-tickets
+e implement leem o status).
+
 Regra de invalidação (verificar), por spec alterada no PR:
-  - approved_by e approved_at vazios: spec ainda não aprovada; passa com aviso.
+  - approved_by e approved_at vazios: spec ainda não aprovada; passa com aviso,
+    a menos que status seja ratified (ratificada sem /approve: falha).
+  - aprovada com status diferente de ratified: falha.
   - só um dos dois preenchido, ou approved_at fora de AAAA-MM-DDTHH:MM:SSZ: falha.
   - o commit de aprovação é o último commit do PR (merge-base..HEAD) que mexe na
     linha approved_at desse arquivo. Falha se:
       * não existe (aprovação herdada da base, mas a spec mudou neste PR);
       * não foi feito pelo workflow (autor github-actions[bot]);
-      * mexe em outras linhas da spec além de approved_by/approved_at;
+      * mexe em outras linhas da spec além de approved_by/approved_at/status;
       * o arquivo no HEAD difere do arquivo nesse commit (mudou depois da aprovação).
 """
 from __future__ import annotations
@@ -28,12 +34,13 @@ import subprocess
 import sys
 from pathlib import Path
 
-CAMPOS_APROVACAO = ("approved_by", "approved_at")
+CAMPOS_APROVACAO = ("approved_by", "approved_at", "status")
+STATUS_RATIFICADO = "ratified"
 EMAIL_BOT = "41898282+github-actions[bot]@users.noreply.github.com"
 RE_TIMESTAMP = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
 # Login do GitHub: alfanumérico e hífen, até 39 caracteres.
 RE_LOGIN = re.compile(r"^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$")
-RE_LINHA_APROVACAO = re.compile(r"^[+-](approved_by|approved_at):")
+RE_LINHA_APROVACAO = re.compile(r"^[+-](approved_by|approved_at|status):")
 
 
 class ErroSpec(Exception):
@@ -81,10 +88,10 @@ def eh_spec(texto: str) -> bool:
 
 
 def preencher_aprovacao(texto: str, login: str, em: str) -> str:
-    """Troca só as linhas approved_by/approved_at do front matter; o resto fica byte a byte."""
+    """Troca só as linhas approved_by/approved_at/status do front matter; o resto fica byte a byte."""
     linhas = texto.splitlines(keepends=True)
     inicio, fim = separar_front_matter(linhas)
-    valores = {"approved_by": login, "approved_at": em}
+    valores = {"approved_by": login, "approved_at": em, "status": STATUS_RATIFICADO}
     encontrados: dict[str, int] = {}
     for i in range(inicio + 1, fim):
         for campo in CAMPOS_APROVACAO:
@@ -136,7 +143,7 @@ def cmd_aprovar(args: argparse.Namespace) -> int:
             continue
         with arquivo.open("w", encoding="utf-8", newline="") as f:
             f.write(novo)
-        print(f"{caminho}: approved_by={args.login} approved_at={args.em}")
+        print(f"{caminho}: approved_by={args.login} approved_at={args.em} status={STATUS_RATIFICADO}")
     return 1 if erros else 0
 
 
@@ -147,12 +154,17 @@ def problema_de_aprovacao(caminho: str, merge_base: str) -> str | None:
     except ErroSpec as e:
         return str(e)
     por, em = campos.get("approved_by", ""), campos.get("approved_at", "")
+    status = campos.get("status", "")
     if not por and not em:
+        if status == STATUS_RATIFICADO:
+            return "status ratified sem aprovação; só o /approve promove a spec"
         return None
     if not por or not em:
         return "approved_by e approved_at devem estar ambos preenchidos ou ambos vazios"
     if not RE_TIMESTAMP.match(em):
         return f"approved_at fora de AAAA-MM-DDTHH:MM:SSZ: {em!r}"
+    if status != STATUS_RATIFICADO:
+        return f"spec aprovada com status {status!r}; o /approve grava status: {STATUS_RATIFICADO}"
 
     commit = git(
         "log", "-1", "--format=%H", "-G", r"^approved_at:", f"{merge_base}..HEAD", "--", caminho
@@ -172,7 +184,7 @@ def problema_de_aprovacao(caminho: str, merge_base: str) -> str | None:
         if l[:1] in "+-" and not l.startswith(("+++", "---")) and not RE_LINHA_APROVACAO.match(l)
     ]
     if outras:
-        return f"o commit de aprovação {curto} altera outras linhas da spec além de approved_by/approved_at"
+        return f"o commit de aprovação {curto} altera outras linhas da spec além de approved_by/approved_at/status"
     if subprocess.run(["git", "diff", "--quiet", commit, "HEAD", "--", caminho]).returncode != 0:
         depois = git("log", "--format=%h %s", f"{commit}..HEAD", "--", caminho).strip()
         return (
@@ -196,7 +208,7 @@ def cmd_verificar(args: argparse.Namespace) -> int:
             falhas += 1
             print(f"::error file={caminho},line=1::Aprovação inválida: {motivo}. Revise e comente /approve no PR.")
         elif campos.get("approved_by"):
-            print(f"{caminho}: aprovada por {campos['approved_by']} em {campos['approved_at']}; conteúdo inalterado desde então.")
+            print(f"{caminho}: ratificada por {campos['approved_by']} em {campos['approved_at']}; conteúdo inalterado desde então (vale após o merge).")
         else:
             print(f"::warning file={caminho},line=1::Spec ainda não aprovada (comente /approve no PR).")
     return 1 if falhas else 0

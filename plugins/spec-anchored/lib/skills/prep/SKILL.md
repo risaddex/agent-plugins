@@ -56,7 +56,7 @@ Create or extend the existing workflow. Keep lint, typecheck, tests with coverag
 
 Only for a GitHub repository with Actions. Ask the human whether to install `/approve` spec approval. Use the host's structured question tool when it exists (in Claude Code, `AskUserQuestion`), with "Install" as the recommended option and the limitations below in the description. Install only on an explicit yes. On a no, record "spec approval: declined" in the report and move on.
 
-What it is: a reviewer comments `/approve` on the spec's pull request; a workflow fills `approved_by` (login) and `approved_at` (comment time, UTC) in the front matter of every changed `specs/*/*.md` that has a `capability_id`, commits as the Actions bot, and replies with the reviewed head SHA. `status` stays `draft`; ratification is still the merge. A sibling check fails the pull request when a spec changes after its approval.
+What it is: a reviewer comments `/approve` on the spec's pull request; a workflow fills `approved_by` (login) and `approved_at` (comment time, UTC) and sets `status: ratified` in the front matter of every changed `specs/*/*.md` that has a `capability_id`, commits as the Actions bot on the pull request branch, and replies with the reviewed head SHA. Ratification takes effect when that pull request is merged into the default branch, which is where `spec-to-tickets` and `implement` read `status`. A sibling check fails the pull request when a spec changes after its approval, when `status: ratified` appears without an approval, or when an approved spec is not `ratified`.
 
 Install:
 

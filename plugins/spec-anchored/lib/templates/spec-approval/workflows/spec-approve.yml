@@ -2,8 +2,9 @@
 #
 # Comentário exatamente `/approve` num PR que altera specs/<capability>/<capability>.md
 # preenche approved_by (login de quem comentou) e approved_at (hora do comentário, UTC) no
-# front matter, num commit do github-actions[bot] no branch do PR. Não mexe em `status`:
-# a promoção a ratified acontece no merge humano do PR da spec.
+# front matter e promove `status` a ratified, num commit do github-actions[bot] no branch do PR.
+# A ratificação só vale depois do merge humano do PR no branch default, que é onde
+# spec-to-tickets e implement leem o status.
 #
 # Por que comentário e não botão: PR não tem botão customizável; o "requested action" de
 # check run só existe para GitHub App, e issue_comment funciona com o GITHUB_TOKEN.
@@ -200,7 +201,7 @@ jobs:
           | Arquivo | Capability |
           |---|---|
           $linhas
-          O \`status\` da spec não muda aqui. Qualquer alteração posterior na spec invalida esta aprovação (check **Aprovação de spec válida**); aí é revisar e comentar \`/approve\` de novo.
+          O \`status\` da spec passou a \`ratified\` neste branch e vale quando o PR for mergeado. Qualquer alteração posterior na spec invalida esta aprovação (check **Aprovação de spec válida**); aí é revisar e comentar \`/approve\` de novo.
 
           O GitHub não informa ao workflow se você marcou o arquivo como *Viewed*: ao comentar \`/approve\` você declara ter revisado o head acima. O commit da aprovação foi feito com \`GITHUB_TOKEN\` e por isso não dispara o CI.
           EOF
