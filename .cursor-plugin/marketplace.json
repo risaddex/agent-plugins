@@ -24,6 +24,17 @@
       "name": "a2a-harness",
       "source": "./plugins/a2a-harness",
       "description": "Conversas duráveis entre agentes descobertos por Agent Cards, via CLI A2A do agent-runtime, sem dependência de provedor."
+    },
+    {
+      "name": "ci-diet",
+      "source": "./plugins/ci-diet",
+      "description": "Encontra tempo de runner desperdiçado em GitHub Actions e Gitea Actions e prepara pequenos patches YAML revisáveis. Fork do dsh-ci-diet com suporte a Gitea.",
+      "keywords": [
+        "ci",
+        "github-actions",
+        "gitea-actions"
+      ],
+      "category": "developer-tools"
     }
   ]
 }

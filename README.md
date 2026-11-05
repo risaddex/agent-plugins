@@ -16,6 +16,7 @@ Cada plugin mantém um conteúdo compartilhado entre hosts. Em `spec-anchored`, 
 |---|---|---|
 | spec-anchored | `plugins/spec-anchored` | Uma spec permanente por capability, gates de máquina antes da revisão humana. Adaptação harness-neutra do método de Raphael Moura ([artigo](https://raphamoura.dev/en/blog/spec-anchored-agentic-development/), [bundle MIT](https://github.com/w00fx/spec-anchored-agentic-development)). |
 | a2a-harness | `plugins/a2a-harness` | Cliente do CLI A2A do `agent-runtime`: descoberta por Cards e conversas duráveis independentes de provedor. |
+| ci-diet | `plugins/ci-diet` | Acha tempo de runner desperdiçado em GitHub/Gitea Actions e prepara patches YAML para revisão humana. Fork [risaddex/dsh-ci-diet](https://github.com/risaddex/dsh-ci-diet) com Gitea; skill + CLI empacotado em `bin/cli.mjs`. |
 
 ## Instalar
 
@@ -36,3 +37,7 @@ python3 plugins/spec-anchored/render.py
 O [A2A Harness](plugins/a2a-harness/README.md) consome um checkout externo do
 `agent-runtime` via `AGENT_RUNTIME_ROOT`, com Node 24 e configuração privada em
 `A2A_COORDINATOR_CONFIG`. Consulte o README do plugin para preparar e verificar.
+
+## CI Diet
+
+`plugins/ci-diet` é uma cópia gerada: rode `bun run bundle:plugin` no fork `dsh-ci-diet` e copie `plugin/` para cá. Para Gitea, exporte `GITEA_URL` e `GITEA_TOKEN` antes de abrir o host.

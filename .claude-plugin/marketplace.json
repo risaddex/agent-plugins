@@ -24,6 +24,17 @@
       "author": {
         "name": "risaddex"
       }
+    },
+    {
+      "name": "ci-diet",
+      "description": "Encontra tempo de runner desperdiçado em GitHub Actions e Gitea Actions e prepara pequenos patches YAML revisáveis. Fork do dsh-ci-diet com suporte a Gitea.",
+      "version": "0.5.2",
+      "source": "./plugins/ci-diet",
+      "author": {
+        "name": "risaddex"
+      },
+      "category": "development",
+      "homepage": "https://github.com/risaddex/dsh-ci-diet"
     }
   ]
 }
