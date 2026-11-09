@@ -15,6 +15,10 @@ Identify the target and pick one mode:
 
 Stop when the frontier is empty: every branch of the design tree visited, nothing left silently assumed. Write no implementation code. Write or edit no spec file.
 
+## Execution policy
+
+When `specs/<capability>/models.env` already exists — a re-shape of a capability that has a spec — honor its `SHAPE` line for this stage: the declared model and effort win over the session default. A brand-new capability has no file yet, so the session default applies. This skill never writes that file; `templates/models.env` documents the keys.
+
 ## Interview mechanics
 
 Map the interview as a design tree and work it in rounds. The frontier is every question whose prerequisites are already settled. Ask the whole frontier in one round, numbered. Wait. A question that depends on an open answer in this round waits for the next round.

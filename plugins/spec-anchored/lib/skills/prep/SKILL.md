@@ -25,7 +25,7 @@ Declare the commands that exist in the root `AGENTS.md` under `## Commands`. If 
 
 Ensure `.agent-runs/` is gitignored.
 
-Execution policy is optional. Copy `templates/models.env` to `specs/<capability>/models.env` only when the human wants a model or effort declared per stage. Absent means the protocol default: the Owner's model at maximum effort, with Phases 7 and 8 pinned to maximum.
+Execution policy is optional. Copy `templates/models.env` to `specs/<capability>/models.env` only when the human wants a model or effort declared per stage. Absent means the protocol default: the Owner's model at maximum effort, with Phases 7 and 8 pinned to maximum. When the file already exists, honor its `PREP` line for this stage.
 
 ## Phase 2 — Metric classes
 
