@@ -14,6 +14,7 @@
 
 ## Unreleased
 
+- Execution policy per capability: `specs/<capability>/models.env` declares a model and an effort for each pipeline stage (`SHAPE`, `TO_SPEC`, `TICKETS`, `PREP`, `IMPLEMENT`) and for any protocol phase (`PHASE_N`), in the `model@effort` form documented by `templates/models.env`. A missing file keeps the previous behaviour: the Owner's model at maximum effort. Phases 7 and 8 stay pinned to maximum, and a lower effort there needs `ALLOW_EFFORT_DOWNGRADE=1` together with an `EFFORT_POLICY_OVERRIDE` record in the run. The approval bundle gains `execution_policy_hash`, so changing the policy invalidates the `APPROVAL-FINGERPRINT`.
 - `shape` asks the frontier through the host's structured question tool (`AskUserQuestion` in Claude Code) when one exists; a numbered text list is the fallback.
 - `prep` gains an optional Phase 4b: after asking the human, it installs `/approve` spec approval from `templates/spec-approval/` (a workflow that fills `approved_by`/`approved_at` from a pull request comment, plus a guard check that fails when a spec changes after approval).
 - `/approve` also sets `status: ratified` on the pull request branch; it takes effect on merge into the default branch. The guard fails on `ratified` without approval and on an approved spec that is not `ratified`. Push of the approval commit is a compare-and-swap on the reviewed head.
