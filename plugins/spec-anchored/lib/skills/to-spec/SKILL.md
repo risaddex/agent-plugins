@@ -9,6 +9,10 @@ Turn the material already in the conversation into the capability spec. A `shape
 
 This skill does not interview. If a template section lacks material, list it under Open questions. Ask nothing. Invent nothing. Default nothing.
 
+## Execution policy
+
+When `specs/<capability>/models.env` already exists, honor its `TO_SPEC` line for this stage: the declared model and effort win over the session default. A first spec usually has no file yet and keeps the session default. This skill never writes that file.
+
 ## Write
 
 1. Identify the capability from the argument or the session subject.

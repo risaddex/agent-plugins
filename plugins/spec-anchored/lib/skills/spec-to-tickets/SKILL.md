@@ -23,6 +23,10 @@ specialist pass       mutation, hardening, or review inside the task
 
 One task may implement many stable IDs, cross layers, and contain several test types.
 
+## Execution policy
+
+Honor the `TICKETS` line of `specs/<capability>/models.env` when that file exists: the declared model and effort win over the session default for this stage. This skill never writes that file.
+
 ## Draft
 
 Read the whole spec and its companion files. Record, on every task, the capability ID, spec path, spec commit, and the stable IDs it implements and verifies.

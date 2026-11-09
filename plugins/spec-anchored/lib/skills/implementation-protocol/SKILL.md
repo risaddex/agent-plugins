@@ -16,7 +16,13 @@ general-code-reviewer
 mutation-hardener
 ```
 
-Both inherit the Owner's effective model. Ask the runtime for maximum effort. If maximum effort cannot be honored or observed, stop with `NAMED_BLOCKER` / `ENVIRONMENT`. Do not switch models and do not accept a downgrade.
+Both inherit the Owner's effective model. The effort and model they run at is the policy the capability declares, not a constant:
+
+- Read `specs/<capability>/models.env` before Phase 3. A missing file means the default below. The format and keys are in `templates/models.env`.
+- Default: the Owner's model at maximum effort. A stage the file declares runs at the declared model and effort; a stage it does not declare keeps the default.
+- Phases 7 and 8 stay pinned to maximum. A lower effort there is accepted only when the same file sets `ALLOW_EFFORT_DOWNGRADE=1`, and the run records `EFFORT_POLICY_OVERRIDE` with the declared line under `.agent-runs/<run-id>/`.
+- If the declared effort cannot be honored or observed, stop with `NAMED_BLOCKER` / `ENVIRONMENT`. Never substitute a cheaper model silently.
+- `models.env` is part of the judging gate: changing it needs its own human approval and invalidates the `APPROVAL-FINGERPRINT`.
 
 Spec conformance, security, performance, compliance, and systemic architecture reviews stay outside this protocol. They run on the pull request, in CI, or with a human.
 
@@ -82,6 +88,7 @@ Build an approval bundle as canonical JSON with sorted keys:
 ```json
 {
   "base_sha": "<sha>",
+  "execution_policy_hash": "<sha256 of specs/<capability>/models.env, or null when absent>",
   "plan_hash": "<sha256 of the plan text>",
   "policy_id": "<issued profile id or supervised-local-v1>",
   "scope_paths": ["<path>"],
@@ -91,6 +98,8 @@ Build an approval bundle as canonical JSON with sorted keys:
   "ticket_hash": "<sha256 of ticket identity and body>"
 }
 ```
+
+`execution_policy_hash` covers the bytes of `specs/<capability>/models.env` and is `null` when that file does not exist. Changing the policy — including flipping `ALLOW_EFFORT_DOWNGRADE` — changes an input and therefore the fingerprint, which is what binds an approval to the effort it approved.
 
 If `scripts/spec-anchored` is installed, use its approval fingerprint. Otherwise hash the canonical JSON with a local SHA-256 command and record the command plus the digest as `APPROVAL-FINGERPRINT`. Any change to those inputs requires a new fingerprint and a new approval. The run carries the approval and does not mint a wider one.
 
