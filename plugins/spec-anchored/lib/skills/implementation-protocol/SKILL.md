@@ -46,7 +46,19 @@ Read the adapter's gate table. Confirm the spec is ratified on the protected def
 
 Confirm repository, branch or worktree, base SHA, issue ownership, available commands, and pre-existing failures. Read the root `AGENTS.md` when it exists. Load `lib/rules/truth-layer.md` for any versioned change, `lib/rules/testing.md` for behavioral changes, and `lib/rules/package-by-feature.md` when production files or capability boundaries move. Record the loaded rule paths.
 
-Create `.agent-runs/<run-id>/`. Run state, logs, approvals, and handoffs live there. They never live under `.cursor/`, `.claude/`, or `.codex/`. Leave unowned user changes untouched.
+Create `.agent-runs/<run-id>/`. Run state, logs, approvals, and handoffs live there. They never live under `.cursor/`, `.claude/`, or `.codex/`. Leave unowned user changes untouched. The directory has this shape, and any tool that reads a run relies on it:
+
+```text
+.agent-runs/<run-id>/
+  preflight.md            # Phase 0
+  ticket.txt              # id, title, url, body
+  plan.md                 # Phase 3
+  approval-bundle.json    # canonical JSON; the fingerprint input
+  APPROVAL-FINGERPRINT.txt
+  phase-<N>-<motivo>.md   # one per phase that needs an account, e.g. phase-5-desvio.md
+```
+
+A directory without one of these files is not a run: build output and loose scans stay elsewhere.
 
 ## Phase 1 — Proven delta
 
